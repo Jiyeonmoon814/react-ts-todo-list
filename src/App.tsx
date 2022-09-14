@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react'
+import { Wrapper } from './App.styled'
+import { Input } from './Input/Input'
+import { TodoList } from './TodoList/TodoList'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export type TodoItemType = {
+  id:number 
+  todo: string 
 }
 
-export default App;
+export const App:React.FC = () => {
+  const [todoItem, setTodoItem] = useState({} as TodoItemType)
+  const [todoList, setTodoList] = useState([] as TodoItemType[])
+
+  useEffect(() => {
+    addTodoItem()
+  },[todoItem])
+  
+  const addTodoItem = () => {
+    setTodoList([...todoList, todoItem])
+  }
+
+
+  return (
+    <Wrapper>
+      <h2>To-do List</h2>
+      <Input setTodoItem={setTodoItem} />
+      <TodoList />
+    </Wrapper>
+  )
+}
